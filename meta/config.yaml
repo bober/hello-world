@@ -1,0 +1,24 @@
+build:
+    os: linux
+    arch: x86
+    sign_key: private_key.pem
+    sign_certificate: sp-client.pem
+    remove_non_regular_files: True
+
+publish:
+    url: aoscloud.io
+    service_uid: 68887824-f79c-4950-b16b-d1ec96e71a43
+    tls_key: private_key.pem
+    tls_certificate: sp-client.pem
+    version: "1.0"
+
+configuration:
+    state:
+        filename: state.dat
+        required: False
+
+    cmd: python3 vis_client_example.py
+    hostname: 'service-hello-world.local'
+    workingDir: '/'
+    env:
+        - WEBHOOK_SITE=https://webhook.site/9bcd3eba-a6f0-4894-904b-5ef4362cc8e0
