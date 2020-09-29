@@ -10,7 +10,7 @@ publish:
     service_uid: 68887824-f79c-4950-b16b-d1ec96e71a43
     tls_key: private_key.pem
     tls_certificate: sp-client.pem
-    version: "1.0"
+    version: "1.1"
 
 configuration:
     state:
