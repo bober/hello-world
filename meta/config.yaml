@@ -6,8 +6,8 @@ build:
     remove_non_regular_files: True
 
 publish:
-    url: aoscloud.io
-    service_uid: 68887824-f79c-4950-b16b-d1ec96e71a43
+    url: staging-fusion.westeurope.cloudapp.azure.com
+    service_uid: 80306412-4bb2-44ca-b299-d7bf0d0e93b5
     tls_key: private_key.pem
     tls_certificate: sp-client.pem
     version: "1.1"
@@ -21,4 +21,4 @@ configuration:
     hostname: 'service-hello-world.local'
     workingDir: '/'
     env:
-        - WEBHOOK_SITE=https://webhook.site/9bcd3eba-a6f0-4894-904b-5ef4362cc8e0
+        - WEBHOOK_SITE=https://webhook.site/3ecdbf71-3eb5-4c19-b947-055ea1929ee4
