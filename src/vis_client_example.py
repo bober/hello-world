@@ -17,8 +17,9 @@ import os
 import time
 import logging
 
-import requests
-from requests.compat import urljoin
+from urllib.parse import urljoin
+from urllib import request
+import json
 
 from aos_vis_client import VISClient, VISDataSubscription, VISDataAccessor
 
@@ -36,6 +37,16 @@ WAIT_TIMEOUT = 5
 LATITUDE_RECEIVER_URL = urljoin(HTTP_REQUEST_RECEIVER_URL, "latitude")
 TELEMETRY_RECEIVER_URL = urljoin(HTTP_REQUEST_RECEIVER_URL, "telemetry")
 VEH_SPEED_RECEIVER_URL = urljoin(HTTP_REQUEST_RECEIVER_URL, "speed_history")
+
+
+def post_data(url, data):
+    headers = {"Content-Type": "application/json", "Accept": "application/json"}
+    json_data = json.dumps(data)
+    try:
+        req = request.Request(url, json_data, headers, method='POST')
+        request.urlopen(req)
+    except Exception as e:
+        print(str(e))
 
 
 class VISTelemetryCachedSubscription(VISDataSubscription):
@@ -90,21 +101,21 @@ def main():
         while True:
             try:
                 logger.info("Sending latitude to '{url}'".format(url=LATITUDE_RECEIVER_URL))
-                requests.post(
+                post_data(
                     url=LATITUDE_RECEIVER_URL,
-                    json={"vin": vin, "latitude": latitude_sub.get_value(wait_timeout=WAIT_TIMEOUT)}
+                    data={"vin": vin, "latitude": latitude_sub.get_value(wait_timeout=WAIT_TIMEOUT)}
                 )
 
                 logger.info("Sending telemetry to '{url}'".format(url=TELEMETRY_RECEIVER_URL))
-                requests.post(
+                post_data(
                     url=TELEMETRY_RECEIVER_URL,
-                    json={"vin": vin, "telemetry": telemetry_sub.get_value(wait_timeout=WAIT_TIMEOUT)}
+                    data={"vin": vin, "telemetry": telemetry_sub.get_value(wait_timeout=WAIT_TIMEOUT)}
                 )
 
                 logger.info("Sending speed history to '{url}'".format(url=VEH_SPEED_RECEIVER_URL))
-                requests.post(
+                post_data(
                     url=VEH_SPEED_RECEIVER_URL,
-                    json={"vin": vin, "speed_history": veh_speed_history_sub.get_cached_results()}
+                    data={"vin": vin, "speed_history": veh_speed_history_sub.get_cached_results()}
                 )
 
                 time.sleep(DATA_SENDING_DELAY)
