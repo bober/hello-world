@@ -5,7 +5,7 @@ services:
 - docker
 env:
   global:
-  - SERVICE_UUID= d9f0683c-1fe6-481f-b493-f901ab74ed5a
+  - SERVICE_UUID=d9f0683c-1fe6-481f-b493-f901ab74ed5a
   - AOS_UPLOAD_SERVICE_URL=https://aoscloud.io:10000/api/v1/services/versions/
   - SP_CERTIFICATE=meta_folder/sp-client.pem
   - PRIVATE_KEY=meta_folder/private_key.pem
